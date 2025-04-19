@@ -1,0 +1,46 @@
+<!-- Navbar component for dashboard and other pages -->
+<nav th:fragment="navbar" class="navbar navbar-expand-lg navbar-light bg-light" aria-label="Main navigation">
+    <a class="navbar-brand" href="#">FormationPlus</a>
+    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+    </button>
+    <div class="collapse navbar-collapse" id="navbarNav">
+        <ul class="navbar-nav ml-auto">
+            <li class="nav-item">
+                <span class="navbar-text me-3" sec:authorize="isAuthenticated()">
+                    <i class="bi bi-person-circle"></i>
+                    <span th:text="${#authentication.name}"></span>
+                    <span class="badge bg-secondary ms-1" th:text="${#authentication.authorities[0]?.authority}"></span>
+                </span>
+            </li>
+
+            <li class="nav-item" sec:authorize="isAuthenticated()">
+                <a class="nav-link" th:href="@{/logout}">Logout</a>
+            </li>
+
+        </ul>
+    </div>
+</nav>
+
+<style>
+    .dark-mode {
+        background-color: #181a1b !important;
+        color: #f8f9fa !important;
+    }
+    .dark-mode .bg-light {
+        background-color: #23272b !important;
+    }
+    .dark-mode .navbar-light .navbar-nav .nav-link {
+        color: #f8f9fa !important;
+    }
+    .dark-mode .table {
+        color: #f8f9fa;
+    }
+    .dark-mode .bg-dark {
+        background-color: #181a1b !important;
+    }
+    .dark-mode .breadcrumb {
+        background-color: #23272b !important;
+        color: #f8f9fa !important;
+    }
+</style>

@@ -1,0 +1,41 @@
+<!-- affichEmployers.html fragment for dashboard main content -->
+<div th:fragment="content">
+    <h1>Employers List</h1>
+    <button class="btn btn-primary mb-3" th:href="@{/employers/add}" sec:authorize="hasRole('ADMIN')">Add Employer</button>
+    <table class="table table-striped">
+        <thead>
+        <tr>
+            <th>ID</th>
+            <th>Employer Name</th>
+            <th>Actions</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr th:each="employer : ${employers}">
+            <td th:text="${employer.id}"></td>
+            <td th:text="${employer.employerName}"></td>
+            <td>
+                <a class="btn btn-sm btn-info" th:href="@{'/employers/update/' + ${employer.id}}" sec:authorize="hasRole('ADMIN')">Edit</a>
+                <a class="btn btn-sm btn-danger" th:href="@{'/employers/delete/' + ${employer.id}}" sec:authorize="hasRole('ADMIN')">Delete</a>
+            </td>
+        </tr>
+        </tbody>
+    </table>
+    <!-- Pagination -->
+    <div class="pagination mt-3">
+        <ul class="pagination">
+            <li class="page-item" th:if="${currentPage > 0}">
+                <a class="page-link" th:href="@{/employers/view(page=${currentPage - 1}, size=5)}">Previous</a>
+            </li>
+
+            <li class="page-item" th:each="i : ${#numbers.sequence(0, totalPages - 1)}"
+                th:classappend="${i == currentPage} ? 'active'">
+                <a class="page-link" th:href="@{/employers/view(page=${i}, size=5)}" th:text="${i + 1}"></a>
+            </li>
+
+            <li class="page-item" th:if="${currentPage < totalPages - 1}">
+                <a class="page-link" th:href="@{/employers/view(page=${currentPage + 1}, size=5)}">Next</a>
+            </li>
+        </ul>
+    </div>
+</div>

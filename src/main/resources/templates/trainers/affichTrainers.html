@@ -1,0 +1,66 @@
+<div th:fragment="content" xmlns:sec="http://www.w3.org/1999/xhtml">
+    <h1>Trainers List</h1>
+
+    <a class="btn btn-primary mb-3"
+       th:href="@{/trainers/new}"
+       sec:authorize="hasAnyRole('ADMIN')">
+        Add Trainer
+    </a>
+
+    <table class="table table-striped">
+        <thead>
+        <tr>
+            <th>ID</th>
+            <th>Image</th>
+            <th>First Name</th>
+            <th>Last Name</th>
+            <th>Email</th>
+            <th>Phone</th>
+            <th>Type</th>
+            <th>Actions</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr th:each="trainer : ${trainers}">
+            <td th:text="${trainer.id}"></td>
+            <td>
+                <img th:src="${trainer.imagePath != null and trainer.imagePath != ''} ? '/uploads/trainers/' + ${trainer.imagePath} : '/picture/default_trainer.png'"
+                     alt="Trainer Image"
+                     class="img-thumbnail"
+                     style="max-width: 100px; height: auto; object-fit: cover;">
+            </td>
+            <td th:text="${trainer.firstName}"></td>
+            <td th:text="${trainer.lastName}"></td>
+            <td th:text="${trainer.email}"></td>
+            <td th:text="${trainer.phone}"></td>
+            <td th:text="${trainer.type}"></td>
+            <td>
+                <a class="btn btn-sm btn-info"
+                   th:href="@{'/trainers/updateTrainer/' + ${trainer.id}}"
+                   sec:authorize="hasAnyRole('ADMIN')">Edit</a>
+                <a class="btn btn-sm btn-danger"
+                   th:href="@{'/trainers/delete/' + ${trainer.id}}"
+                   sec:authorize="hasRole('ADMIN')">Delete</a>
+            </td>
+        </tr>
+        </tbody>
+    </table>
+
+    <!-- Pagination -->
+    <div class="pagination mt-3">
+        <ul class="pagination">
+            <li class="page-item" th:if="${currentPage > 0}">
+                <a class="page-link" th:href="@{/trainers/view(page=${currentPage - 1}, size=${pageSize})}">Previous</a>
+            </li>
+
+            <li class="page-item" th:each="i : ${#numbers.sequence(0, totalPages - 1)}"
+                th:classappend="${i == currentPage} ? 'active'">
+                <a class="page-link" th:href="@{/trainers/view(page=${i}, size=${pageSize})}" th:text="${i + 1}"></a>
+            </li>
+
+            <li class="page-item" th:if="${currentPage < totalPages - 1}">
+                <a class="page-link" th:href="@{/trainers/view(page=${currentPage + 1}, size=${pageSize})}">Next</a>
+            </li>
+        </ul>
+    </div>
+</div>

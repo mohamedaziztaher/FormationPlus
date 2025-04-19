@@ -1,0 +1,88 @@
+<!-- Sidebar component for dashboard -->
+<nav
+  th:fragment="sidebar(activePage)"
+  class="col-md-2 d-none d-md-block bg-light sidebar"
+>
+  <div class="sidebar-sticky">
+    <ul class="nav flex-column">
+      <!-- Trainings -->
+      <li
+        class="nav-item"
+        sec:authorize="hasAnyRole('ADMIN','USER')"
+        th:classappend="${activePage} == 'trainings' ? 'active'"
+      >
+        <a class="nav-link" th:href="@{/trainings/view}">Trainings</a>
+      </li>
+
+      <!-- Trainers -->
+      <li
+        class="nav-item"
+        sec:authorize="hasAnyRole('ADMIN','USER')"
+        th:classappend="${activePage} == 'trainers' ? 'active'"
+      >
+        <a class="nav-link" th:href="@{/trainers/view}">Trainers</a>
+      </li>
+
+      <!-- Participants -->
+      <li
+        class="nav-item"
+        sec:authorize="hasAnyRole('ADMIN','USER')"
+        th:classappend="${activePage} == 'participants' ? 'active'"
+      >
+        <a class="nav-link" th:href="@{/participants/view}">Participants</a>
+      </li>
+
+      <!-- Users (ADMIN only) -->
+      <li
+        class="nav-item"
+        sec:authorize="hasRole('ADMIN')"
+        th:classappend="${activePage} == 'users' ? 'active'"
+      >
+        <a class="nav-link" th:href="@{/users/view}">Users</a>
+      </li>
+
+      <!-- Domains (ADMIN only) -->
+      <li
+        class="nav-item"
+        sec:authorize="hasRole('ADMIN')"
+        th:classappend="${activePage} == 'domains' ? 'active'"
+      >
+        <a class="nav-link" th:href="@{/domains/view}">Domains</a>
+      </li>
+
+      <!-- Structures (ADMIN only) -->
+      <li
+        class="nav-item"
+        sec:authorize="hasRole('ADMIN')"
+        th:classappend="${activePage} == 'structures' ? 'active'"
+      >
+        <a class="nav-link" th:href="@{/structures/view}">Structures</a>
+      </li>
+
+      <!-- Profiles (ADMIN only) -->
+      <li
+        class="nav-item"
+        sec:authorize="hasRole('ADMIN')"
+        th:classappend="${activePage} == 'profiles' ? 'active'"
+      >
+        <a class="nav-link" th:href="@{/profiles/view}">Profiles</a>
+      </li>
+      <!-- Employers (ADMIN only) -->
+      <li
+              class="nav-item"
+              sec:authorize="hasRole('ADMIN')"
+              th:classappend="${activePage} == 'employers' ? 'active'"
+      >
+        <a class="nav-link" th:href="@{/employers/view}">Employers</a>
+      </li>
+      <!-- Statistics (MANAGER + ADMIN) -->
+      <li
+        class="nav-item"
+        sec:authorize="hasAnyRole('MANAGER','ADMIN')"
+        th:classappend="${activePage} == 'statistics' ? 'active'"
+      >
+        <a class="nav-link" th:href="@{/statistics/view}">Statistics</a>
+      </li>
+    </ul>
+  </div>
+</nav>
